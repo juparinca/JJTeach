@@ -1,0 +1,158 @@
+body {
+	background: url(../img/6.jpg);
+	background-size: cover;
+}
+
+.caja {
+	font-family: sans-serif;
+	width: 350px;
+	padding: 20px;
+	border-radius: 20px;
+	background: rgb(20,29,37,0.78);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+}
+
+.caja h1 {
+	color: #fff;
+	text-transform:uppercase;
+	font-size: 35px;
+}
+
+.caja input[type="text"], .caja input[type="password"] {
+	border: 2px solid #3498db;
+	background: none;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	padding: 8px;
+	width: 225px;
+	outline: none;
+	color: #fff;
+	border-radius: 24px;
+	transition: 0.25s;
+	font-size: 20;
+}
+
+.caja input[type="text"]:focus, .caja input[type="password"]:focus {
+	width: 280px;
+	border-color: #2ecc71;
+}
+
+.caja input[type="submit"] {
+	border: 2px solid #2ecc71;
+	background: rgb(46,204,113,0.2);
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	padding: 8px 20px;
+	outline: none;
+	color: #fff;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+	font-size: 20;
+}
+
+.caja input[type="submit"]:hover {
+	background: #2ecc71;
+}
+
+.caja input[type="submit"]:active {
+	transform: scale(0.95);
+}
+
+.caja hr {
+	border-color: #3498db;
+}
+
+.caja label {
+	color: #fff;		
+}
+
+.caja a {
+	color: #2ecc71;
+	text-decoration: none;
+body {
+	background: url(../img/6.jpg);
+	background-size: cover;
+}
+
+.caja {
+	font-family: sans-serif;
+	width: 350px;
+	padding: 20px;
+	border-radius: 20px;
+	background: rgb(20,29,37,0.78);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+}
+
+.caja h1 {
+	color: #fff;
+	text-transform:uppercase;
+	font-size: 35px;
+}
+
+.caja input[type="text"], .caja input[type="password"] {
+	border: 2px solid #3498db;
+	background: none;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	padding: 8px;
+	width: 225px;
+	outline: none;
+	color: #fff;
+	border-radius: 24px;
+	transition: 0.25s;
+	font-size: 20;
+}
+
+.caja input[type="text"]:focus, .caja input[type="password"]:focus {
+	width: 280px;
+	border-color: #2ecc71;
+}
+
+.caja input[type="submit"] {
+	border: 2px solid #2ecc71;
+	background: rgb(46,204,113,0.2);
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	padding: 8px 20px;
+	outline: none;
+	color: #fff;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+	font-size: 20;
+}
+
+.caja input[type="submit"]:hover {
+	background: #2ecc71;
+}
+
+.caja input[type="submit"]:active {
+	transform: scale(0.95);
+}
+
+.caja hr {
+	border-color: #3498db;
+}
+
+.caja label {
+	color: #fff;		
+}
+
+.caja a {
+	color: #2ecc71;
+	text-decoration: none;
+}
+

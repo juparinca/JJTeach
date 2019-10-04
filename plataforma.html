@@ -1,0 +1,487 @@
+<?php
+  requires("paginas/administrarArchivos.php");
+
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JJTeach</title>
+  <meta charset='utf-8' />
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <meta name="viewport" content="width=500, initial-scale=1">
+
+  <link href='calendario/fullcalendar.min.css' rel='stylesheet' />
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link href='calendario/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+  <link rel="stylesheet" href="css/calendario_juan.css">
+  <link rel="stylesheet" href="css/bootstrap-clockpicker.css">
+
+  <script src='bootstrap/js/bootstrap.min.js'></script>
+  <script src='calendario/lib/moment.min.js'></script>
+  <script src='calendario/lib/jquery.min.js'></script>
+  <script src='calendario/fullcalendar.min.js'></script>
+  <script src="calendario/locale/es.js"></script>
+  <script src="popper/popper.min.js"></script>
+  <script src="popper/bootstrap.min.js"></script>
+  <script src="js/bootstrap-clockpicker.js"></script>
+  <script src="js/refrescarPaginaIndex.js"> </script>
+
+  <script src="js/bom.js"></script>
+
+<style>
+  .fc th{
+    padding: 10px 0px;
+    vertical-align: middle;
+    background: #f2f2f2;
+  }
+
+
+  .cerrarSesion{
+    color:blue;
+  }
+
+  .cerrarSesion:hover{
+    color:rgb(17, 150, 164);
+  }
+
+/*COLOR DEL DIA*/
+.fc-unthemed td.fc-today{
+  background:rgb(68, 194, 207,0.5);
+}
+
+body{
+  background: rgb(0,0,0,0.1);
+  overflow: auto;
+
+  background: rgba(186,198,204,1);
+  background: -moz-linear-gradient(-45deg, rgba(186,198,204,1) 0%, rgba(216,225,231,1) 6%, rgba(215,224,230,1) 7%, rgba(182,183,184,1) 38%, rgba(181,198,208,1) 51%, rgba(88,69,209,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(186,198,204,1)), color-stop(6%, rgba(216,225,231,1)), color-stop(7%, rgba(215,224,230,1)), color-stop(38%, rgba(182,183,184,1)), color-stop(51%, rgba(181,198,208,1)), color-stop(100%, rgba(88,69,209,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(186,198,204,1) 0%, rgba(216,225,231,1) 6%, rgba(215,224,230,1) 7%, rgba(182,183,184,1) 38%, rgba(181,198,208,1) 51%, rgba(88,69,209,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(186,198,204,1) 0%, rgba(216,225,231,1) 6%, rgba(215,224,230,1) 7%, rgba(182,183,184,1) 38%, rgba(181,198,208,1) 51%, rgba(88,69,209,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(186,198,204,1) 0%, rgba(216,225,231,1) 6%, rgba(215,224,230,1) 7%, rgba(182,183,184,1) 38%, rgba(181,198,208,1) 51%, rgba(88,69,209,1) 100%);
+  background: linear-gradient(135deg, rgba(186,198,204,1) 0%, rgba(216,225,231,1) 6%, rgba(215,224,230,1) 7%, rgba(182,183,184,1) 38%, rgba(181,198,208,1) 51%, rgba(88,69,209,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bac6cc', endColorstr='#5845d1', GradientType=1 );
+
+}
+
+
+</style>
+
+</head>
+<body>
+
+  
+<div>
+
+
+
+
+</div>
+  <div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <div class=" opciones">
+        <table>
+          <tr>
+            <td><a href="#">Inicio</td>
+            </tr>
+
+            <tr>
+              <td><a href="agenda.html">Organizar Agenda</a></td>
+            </tr>
+
+            <tr>
+              <td>Administrar Grupos</td>
+            </tr>
+
+            <tr>
+              <td><a href="paginas/administrarArchivos.php" >Administrar Archivos</td>
+            </tr>
+
+            <tr>
+              <td>Horarios</td>
+            </tr>
+
+            <tr>
+              <td>Evaluaciones</td>
+            </tr>
+
+            <tr>
+              <td>Trabajos y Talleres</td>
+            </tr>
+
+
+            <tr>
+              <td><img class="docente" src="img/docente.png"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div id="calendar" class=" col-xs-8 col-sm-8 col-md- col-lg-8">
+       
+      </div>
+</div>
+
+<div><a id="cerrarSesion" class= "cerrarSesion" href="formularios/cerrarSesion.php">Cerrar sesión</a></div>
+
+      
+
+     <div class="pie">JJTeach</div>
+
+
+     <!-- Modal (CRUD)-->
+    
+     <div class="modal fade" id="crudEventos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- TITULO DEL EVENTO-->
+            <h5 class="modal-title" id="tituloEvento">
+              
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          
+
+          <!-- FORMULARIO EVENTO-->
+
+          <form class="container">
+
+
+           <!--ID-->
+           <div class="row">
+            <div class="col">
+             <!-- Id: --> <input id="txtId" type="hidden" class="form-control"  name="txtId" readonly="readonly">
+            </div>
+          </div>
+
+            <!--TITULO -->
+            <div class="row">
+              <div class="col">
+                Título: <input id="txtTitulo" type="text" class="form-control"  name="txtTitulo" required="required">
+              </div>
+            </div>
+
+            <!--FECHA INICIO-->
+            <div class="row">
+              <div class="col-6">
+
+                   Fecha: <input id="txtFecha" class="form-control" type="date"  name="txtFecha">
+               
+              </div>
+
+
+              <!--FECHA FINAL-->
+              
+                <div class="col-6">
+                  Hasta: <input id="txtFechaFinal" class="form-control" type="date"  name="txtFechaFinal">
+                </div>
+              </div>
+
+              <!--HORA -->
+              <div class="row">
+              <div class="col">
+
+                <div class="input-group clockpicker" data-autoclose="true">
+                    Hora:<p> <input id="txtHora" type="text" class="form-control"  name="txtHora" required="required">
+
+                </div>
+              
+              </div>
+           
+
+             <!--HORA FINAL-->
+              
+              <div class="col input-group clockpicker" data-autoclose="true">
+                Hasta: <p><input id="txtHoraFinal" type="text" class="form-control"  name="txtHoraFinal" required="required">
+              </div>
+            </div>
+
+            <!--DESCRIPCIÓN  -->
+            <div class="row">
+              <div class="col">
+                Descripción: <textarea id="txtDescripcion" type="text" class="form-control"  rows="3" name="txtDescripcion" required="required"></textarea>
+              </div>
+            </div>
+
+          </br>
+          <!--Color Fondo  -->
+          <div class="row">
+            <div class="col">
+              Color de fondo: <input type="color" value="black" id="txtColor" name="txtColor">
+            </div>
+
+            <div class="col">
+              Color de texto: <input type="color" value="white" id="txtColorTexto" name="txtColorTexto">
+            </div>
+
+          </div>
+          </br>
+          
+<!-- GRUPOS -->
+<div class="">
+    <label for="exampleFormControlSelect1"> ¿A qué grupo deseas agregar el evento? </label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>Ninguno</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+
+
+       
+
+<!-- BTN AGREGAR-->
+        <div class="modal-footer">
+         <button type="submit" id="btnAgregar" class="btn btn-success" >Agregar</button>
+
+<!-- BTN MODIFICAR-->         
+         <button type="button" id= "btnModificar" class="btn btn-primary" >Modificar</button>
+
+<!-- BTN BORRAR-->
+         <button type="button" id="btnBorrar" class="btn btn-danger">Borrar</button>
+
+<!-- BTN CANCELAR-->         
+         <button type="button" id="btnCancelar"class="btn btn-secondary">Cancelar</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+</form>
+</body>
+
+<script>
+ $(document).ready(function(){
+  $('#calendar').fullCalendar({
+    header:{
+      left:'today,prev,next',
+      center:'title',
+      right:'month,basicWeek,basicDay,agendaWeek,agendaDay'
+    },
+
+    dayClick:function(date,jsEvent,view){
+
+      limpiarFormulario();
+
+      $('#txtFecha').val(date.format());
+      $('#txtFechaFinal').val(date.format());
+
+      $('#crudEventos').modal();
+
+      $('#btnAgregar').prop("disabled",false);
+      $('#btnModificar').prop("disabled",true);
+      $('#btnBorrar').prop("disabled",true);
+    },
+        /*dayClick:function(date,jsEvent,view){
+          
+          $(this).css('background-color','skyblue');
+          $("#añadirEvento").modal();
+        },*/
+
+
+
+        
+
+
+        events:'http://localhost/prueba/eventos/eventos.php',
+
+      /*EJEMPLO DE INSERCIÓN
+       [{
+          title:'Evento 1 Llegamos',
+          descripcion:"hola amigo",
+          start:'2019-05-08T12:30:00',            
+          end:'2019-05-09T12:30:00',    
+          color:"black",
+          textColor:"yellow",  
+          allDay:false
+
+        }
+        
+        ]*/
+        
+
+
+        eventClick:function(calEvent,jsEvent,view){
+/* VALIDACION DE RELLENO DE FORMULARIO*/
+
+
+
+          $('#btnAgregar').prop("disabled",true);
+         $('#btnModificar').prop("disabled",false);
+         $('#btnBorrar').prop("disabled",false);
+
+          $('#tituloEvento').html(calEvent.title);
+
+          //Mostrar información del evento
+          $('#txtId').val(calEvent.id);
+          $('#txtTitulo').val(calEvent.title);
+          $('#txtColor').val(calEvent.color);
+          $('#txtColorTexto').val(calEvent.textColor);
+          $('#txtDescripcion').val(calEvent.descripcion);
+
+          FechaHora= calEvent.start._i.split(" ");
+          $('#txtFecha').val(FechaHora[0]);
+          $('#txtHora').val(FechaHora[1]);
+
+          FechaHoraFinal= calEvent.end._i.split(" ");
+          $('#txtFechaFinal').val(FechaHoraFinal[0]);
+          $('#txtHoraFinal').val(FechaHoraFinal[1]);
+
+
+          
+          
+
+
+          $("#crudEventos").modal();
+        },
+
+          editable:true,
+          eventDrop:function(calEvent){
+            $('#txtId').val(calEvent.id);
+            $('#txtTitulo').val(calEvent.title);
+            $('#txtColor').val(calEvent.color);
+            $('#txtDescripcion').val(calEvent.descripcion);
+
+            var fechaHora=calEvent.start.format().split("T");
+            $('#txtFecha').val(fechaHora[0]);
+            $('#txtHora').val(fechaHora[1]);
+
+//TERMINAR PARA QUE COJA LA FECHA FINAL
+            var fechaHoraFinal=calEvent.end.format().split("T");
+            $('#txtFechaFinal').val(fechaHoraFinal[0]);
+            $('#txtHoraFinal').val(fechaHoraFinal[1]);
+
+            RecolectarDatosGUI();
+            EnviarInformacion('modificar',NuevoEvento,true);
+          }
+        
+      });
+});
+ document.write("</div>");
+
+ /*AGREGAR LOS VALORES A LA BASE DE DATOS*/
+ 
+var NuevoEvento;
+
+//BTN AGREGAR
+ $('#btnAgregar').click(function(){
+//VALIDACION DE CADA INPUT 
+var titulo= $('#txtTitulo').val();
+var hora=$('#txtHora').val();
+var horaFinal=$('#txtHoraFinal').val();
+var descripcion=$('#txtDescripcion').val();
+
+  RecolectarDatosGUI();
+  
+if( !titulo == '' && !hora == '' && !horaFinal== '' && !descripcion == '' ){
+    //alert("enviar");
+    EnviarInformacion('agregar',NuevoEvento);
+
+  }else{
+    //alert("no se envia");
+  }
+  
+
+});
+
+//BTN BORRAR
+ $('#btnBorrar').click(function(){
+
+  RecolectarDatosGUI();
+  EnviarInformacion('eliminar',NuevoEvento);
+
+});
+
+ //BTN ACTUALIZAR
+ $('#btnModificar').click(function(){
+
+  RecolectarDatosGUI();
+  EnviarInformacion('modificar',NuevoEvento);
+
+});
+
+ //BTN CANCELAR
+ $('#btnCancelar').click(function(){
+  $('#crudEventos').modal('toggle');
+
+});
+function RecolectarDatosGUI(){
+  NuevoEvento={
+    id:$('#txtId').val(),
+    title:$('#txtTitulo').val(),
+    start:$('#txtFecha').val()+" "+$('#txtHora').val(), 
+    end:$('#txtFechaFinal').val()+" "+$('#txtHoraFinal').val(),      
+    descripcion:$('#txtDescripcion').val(),
+    color:$('#txtColor').val(),
+    textColor:$('#txtColorTexto').val()
+
+  };
+
+
+ }
+
+ function EnviarInformacion(accion,objEvento,modal){
+  $.ajax({
+    type:'POST',
+    url:'eventos/eventos.php?accion='+accion,
+    data:objEvento,
+    success:function(msg){
+      if(msg){
+        $('#calendar').fullCalendar('refetchEvents');
+        if(!modal){
+          $('#crudEventos').modal('toggle');  
+
+        }
+
+
+        
+      }
+    },
+    error:function(){
+      alert("Hay un error ..");
+    }
+  });
+}
+
+//RELOj
+
+$('.clockpicker').clockpicker();
+
+//FORMULARIO LIMPIO
+function limpiarFormulario(){
+  var fechaActual=  $('#txtFecha').val('');
+  $('#tituloEvento').html('Agrega un nuevo evento');
+
+  $('#txtId').val('');
+  $('#txtTitulo').val('');
+  $('#txtFecha').val('');
+  $('#txtFechaFinal').val('');
+  $('#txtHora').val('');
+  $('#txtHoraFinal').val('');
+  $('#txtColor').val('');
+  $('#txtDescripcion').val('');
+
+
+}
+
+
+</script>
+
+<script>  
+
+  $('#cerrarSesion').click(function(){
+   location.replace("../index.html");
+
+  });
+
+  
+</script>
+</html>
